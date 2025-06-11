@@ -2,7 +2,7 @@
 
 **Important:** This implementation is based on the **Billplz API V3**. Ensure compatibility with your integration requirements and verify if this version aligns with the gateway setup provided by Billplz.
 
-An Omnipay driver for integrating with the Billplz payment gateway, supporting features such as `purchase`, `completePurchase`, and `fetchTransaction`.
+An Omnipay driver for integrating with the Billplz payment gateway, supporting features such as `purchase`, `completePurchase`, `completePurchaseCallback`, and `fetchTransaction`.
 
 ## Getting Started
 
@@ -85,6 +85,31 @@ Verifies the transaction status by handling the response from Billplz after the 
 
 ```php
 $response = $gateway->completePurchase()->send();
+
+if ($response->isSuccessful()) {
+    echo 'Transaction successful';
+} else {
+    echo 'Transaction failed';
+}
+```
+
+#### Response Methods
+
+- `isSuccessful()`: Aliases `isPaid()`.
+- `isPaid()`: Indicates if the transaction was successfully paid.
+- `getPaidAt()`: Returns the date and time when payment was made.
+- `isSignatureValid()`: Indicates if the response signature was valid.
+- `getTransactionReference()`: Returns Billplz's Bill ID.
+- `getData()`: Returns the Billplz transaction response.
+
+### `completePurchaseCallback`
+
+Verifies the transaction status by handling the response from Billplz after the user completes payment.
+
+#### Example
+
+```php
+$response = $gateway->completePurchaseCallback()->send();
 
 if ($response->isSuccessful()) {
     echo 'Transaction successful';
