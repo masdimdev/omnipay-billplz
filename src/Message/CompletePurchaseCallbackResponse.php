@@ -24,7 +24,7 @@ class CompletePurchaseCallbackResponse extends AbstractResponse
      */
     public function isPaid(): bool
     {
-        return isset($this->data['paid']) && boolval($this->data['paid']) === true;
+        return isset($this->data['paid']) && filter_var($this->data['paid'], FILTER_VALIDATE_BOOLEAN);
     }
 
     /**
